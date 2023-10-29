@@ -1,7 +1,7 @@
-import { LunarDate, SolarDate } from './types';
-import { getTotalDaysOfLunarMonth, getTotalDaysOfLunarYear } from './days';
-import { getLeapDays, getLeapMonth } from './leap';
-import { lunarDateToStr } from './misc';
+import { LunarDate, SolarDate } from "./types";
+import { getTotalDaysOfLunarMonth, getTotalDaysOfLunarYear } from "./days";
+import { getLeapDays, getLeapMonth } from "./leap";
+import { lunarDateToStr } from "./misc";
 
 /**
  * 将日期字符串 YYYY-MM-DD 或者一个 Date 对象分割为 [YYYY, M - 1, D]
@@ -16,11 +16,11 @@ export const normalizeDateStr = (date: string | Date) => {
   if (date instanceof Date) {
     return [date.getFullYear(), date.getMonth() + 1, date.getDate()];
   }
-  
+
   const result = date
-    .split(/[\. \-\/]/)
-    .filter(word => word !== '')
-    .map(word => +word.trim());
+    .split(/[. -/]/)
+    .filter((word) => word !== "")
+    .map((word) => +word.trim());
 
   return result;
 };
@@ -37,12 +37,12 @@ export const solar2lunar = (dateStr: string | Date): LunarDate => {
   // 参数区间1900.1.31~2100.12.31
   // 年份限定、上限
   if (year < 1900 || year > 2100) {
-    throw new Error('year should be between 1900 and 2100.');
+    throw new Error("year should be between 1900 and 2100.");
   }
 
   // 公历传参最下限 1900-01-31
   if (year === 1900 && month === 1 && day < 31) {
-    throw new Error('date must be after 1900-1-31.');
+    throw new Error("date must be after 1900-1-31.");
   }
 
   const utcDate = Date.UTC(year, month - 1, day); // 获取当前日期UTC值
@@ -112,7 +112,10 @@ export const solar2lunar = (dateStr: string | Date): LunarDate => {
     isLeap: leapFixed,
     toString(toCnStr) {
       if (toCnStr) {
-        return lunarDateToStr(`${lunarYear}-${lunarMonth}-${lunarDay}`, leapFixed);
+        return lunarDateToStr(
+          `${lunarYear}-${lunarMonth}-${lunarDay}`,
+          leapFixed,
+        );
       }
 
       return `${lunarYear}-${lunarMonth}-${lunarDay}`;
@@ -126,7 +129,10 @@ export const solar2lunar = (dateStr: string | Date): LunarDate => {
  * @param isLeapMonth 是否闰月，若该月不是闰月，会忽略该参数
  * @returns SolarDate
  */
-export const lunar2solar = (dateStr: string, isLeapMonth?: boolean): SolarDate => {
+export const lunar2solar = (
+  dateStr: string,
+  isLeapMonth?: boolean,
+): SolarDate => {
   const [year, month, day] = normalizeDateStr(dateStr);
   const leapMonth = getLeapMonth(year);
 
@@ -142,7 +148,7 @@ export const lunar2solar = (dateStr: string, isLeapMonth?: boolean): SolarDate =
 
   if (year < 1900 || year > 2100 || day > totalDays) {
     // 日期不合法
-    throw new Error('invalid date.');
+    throw new Error("invalid date.");
   }
 
   // 农历日期时间偏移量

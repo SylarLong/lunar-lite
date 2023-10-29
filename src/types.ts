@@ -68,9 +68,9 @@ export type SolarDate = {
   toString: () => string;
 };
 
-export type HeavenlyStem = typeof HEAVENLY_STEMS[number];
+export type HeavenlyStem = (typeof HEAVENLY_STEMS)[number];
 
-export type EarthlyBranch = typeof EARTHLY_BRANCHES[number];
+export type EarthlyBranch = (typeof EARTHLY_BRANCHES)[number];
 
 export type HeavenlyStemAndEarthlyBranch = [HeavenlyStem, EarthlyBranch];
 

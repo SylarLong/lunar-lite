@@ -11,18 +11,18 @@ import { TERM_INFO } from "./constants";
  */
 export const getTerm = (year: number, termNo: number) => {
   if (year < 1900 || year > 2100) {
-    throw new Error('Year should be greater or equal then 1900.');
+    throw new Error("Year should be greater or equal then 1900.");
   }
 
   if (termNo < 1 || termNo > 24) {
-    throw new Error('termNo should be between 1 and 24.');
+    throw new Error("termNo should be between 1 and 24.");
   }
 
   const _table: string = TERM_INFO[year - 1900];
   const _info: string[] = [];
 
   for (let i = 0; i < 30; i += 5) {
-    _info.push(parseInt('0x' + _table.substring(i, i + 5), 16).toString());
+    _info.push(parseInt("0x" + _table.substring(i, i + 5), 16).toString());
   }
 
   const _calday: string[] = [];

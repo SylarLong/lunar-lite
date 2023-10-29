@@ -123,7 +123,7 @@ export const lunarDateToStr = (lunarDateStr: string, isLeap: boolean) => {
   const [year, month, day] = lunarDateStr.split("-").map((item) => +item);
 
   return `${lunarYearToStr(year)}年${isLeap ? "(闰)" : ""}${lunarMonthToStr(
-    month
+    month,
   )}${lunarDayToStr(day)}`;
 };
 
