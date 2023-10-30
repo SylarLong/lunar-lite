@@ -148,5 +148,8 @@ describe("calendar/convertor", () => {
     Object.entries(data).forEach(([key, value]) => {
       expect(normalizeDateStr(key)).toStrictEqual(value);
     });
+
+    expect(normalizeDateStr(new Date(2023, 11, 1))).toStrictEqual([2023, 12, 1, 0, 0, 0]);
+    expect(normalizeDateStr(new Date(2023, 11, 1, 12))).toStrictEqual([2023, 12, 1, 12, 0, 0]);
   });
 });
