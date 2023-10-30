@@ -1,4 +1,4 @@
-import { lunar2solar, solar2lunar } from "..";
+import { lunar2solar, normalizeDateStr, solar2lunar } from "..";
 
 describe("calendar/convertor", () => {
   test("solar2lunar()", () => {
@@ -132,5 +132,21 @@ describe("calendar/convertor", () => {
     } catch (err) {
       expect((err as Error).message).toBe("invalid date.");
     }
+  });
+
+  test("normalizeDateStr()", () => {
+    const data = {
+      "2023-12-1": [2023, 12, 1],
+      "1998-01-02": [1998, 1, 2],
+      "1987-1-08": [1987, 1, 8],
+      "2016-08-18": [2016, 8, 18],
+      "1986-7-15 12:23:59": [1986, 7, 15, 12, 23, 59],
+      "1986.7/15 12:23:59": [1986, 7, 15, 12, 23, 59],
+      "1986.07-15 12:23": [1986, 7, 15, 12, 23],
+    };
+
+    Object.entries(data).forEach(([key, value]) => {
+      expect(normalizeDateStr(key)).toStrictEqual(value);
+    });
   });
 });

@@ -4,7 +4,7 @@ import { getLeapDays, getLeapMonth } from "./leap";
 import { lunarDateToStr } from "./misc";
 
 /**
- * 将日期字符串 YYYY-MM-DD 或者一个 Date 对象分割为 [YYYY, M - 1, D]
+ * 将日期字符串 YYYY-MM-DD 或者一个 Date 对象分割为 [YYYY, M, D, H, m, s]
  * 当参数为字符串时分割符可以是 `-` `.` 或者 `/`
  *
  * @param dateStr 日期字符串或者 Date 对象
@@ -14,15 +14,21 @@ import { lunarDateToStr } from "./misc";
  */
 export const normalizeDateStr = (date: string | Date) => {
   if (date instanceof Date) {
-    return [date.getFullYear(), date.getMonth() + 1, date.getDate()];
+    return [
+      date.getFullYear(),
+      date.getMonth() + 1,
+      date.getDate(),
+      date.getHours(),
+      date.getMinutes(),
+      date.getSeconds(),
+    ];
   }
 
-  const result = date
-    .split(/[. -/]/)
-    .filter((word) => word !== "")
-    .map((word) => +word.trim());
-
-  return result;
+  return date
+    .split(/[ ]+/)
+    .map((item) => item.split(/[-:/.]/))
+    .reduce((prev, next) => prev.concat(next), [])
+    .map((item) => +item);
 };
 
 /**
