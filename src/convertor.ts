@@ -130,6 +130,7 @@ export const solar2lunar = (dateStr: string | Date): LunarDate => {
 };
 
 /**
+ * 农历转公历
  *
  * @param dateStr 农历日期 YYYY-MM-DD
  * @param isLeapMonth 是否闰月，若该月不是闰月，会忽略该参数
