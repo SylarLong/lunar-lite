@@ -71,7 +71,7 @@ describe("calendar/heavenlyStemAndEarthlyBranch", () => {
       {
         date: "2023-1-21",
         timeIndex: 12,
-        result: "壬寅 癸丑 庚辰 丙子",
+        result: "癸卯 癸丑 庚辰 丙子",
       },
       {
         date: "2023-03-09",
@@ -91,9 +91,21 @@ describe("calendar/heavenlyStemAndEarthlyBranch", () => {
       {
         date: "2023-2-19",
         timeIndex: 12,
-        isLeap: false,
         result: "癸卯 甲寅 己酉 甲子",
       },
+      {
+        date: '1987-12-6',
+        timeIndex: 11,
+        result: "丁卯 辛亥 己丑 乙亥"
+      }, {
+        date: '1987-12-6',
+        timeIndex: 12,
+        result: "丁卯 壬子 庚寅 丙子"
+      }, {
+        date: '1983-4-22',
+        timeIndex: 0,
+        result: "癸亥 丙辰 庚辰 丙子"
+      }
     ];
 
     data.forEach(({ date, timeIndex, result }) => {

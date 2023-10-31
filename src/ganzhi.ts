@@ -15,7 +15,7 @@ import {
  * @return [干, 支]
  */
 const heavenlyStemAndEarthlyBranchFromOffset = (
-  offset: number,
+  offset: number
 ): HeavenlyStemAndEarthlyBranch => {
   return [HEAVENLY_STEMS[offset % 10], EARTHLY_BRANCHES[offset % 12]];
 };
@@ -27,7 +27,7 @@ const heavenlyStemAndEarthlyBranchFromOffset = (
  * @return [干, 支]
  */
 export const heavenlyStemAndEarthlyBranchOfYear = (
-  year: number,
+  year: number
 ): HeavenlyStemAndEarthlyBranch => {
   let heavenStemKey = (year - 3) % 10;
   let earthlyBranchKey = (year - 3) % 12;
@@ -48,7 +48,7 @@ export const heavenlyStemAndEarthlyBranchOfYear = (
  * @returns [干, 支]
  */
 export const heavenlyStemAndEarthlyBranchOfMonth = (
-  date: Date,
+  date: Date
 ): HeavenlyStemAndEarthlyBranch => {
   const [year, month, day] = normalizeDateStr(date);
 
@@ -72,15 +72,13 @@ export const heavenlyStemAndEarthlyBranchOfMonth = (
  * @returns [干, 支]
  */
 export const heavenlyStemAndEarthlyBranchOfDay = (
-  date: Date,
-  timeIndex: number,
+  date: Date
 ): HeavenlyStemAndEarthlyBranch => {
   const [year, month, day] = normalizeDateStr(date);
-  const dayFix = timeIndex === 12 ? 1 : 0; // 若时辰索引为12表示是晚子时，需要加一天
   const dayCyclical =
     Date.UTC(year, month - 1, 1, 0, 0, 0, 0) / 86400000 + 25567 + 10;
 
-  return heavenlyStemAndEarthlyBranchFromOffset(dayCyclical + day + dayFix - 1);
+  return heavenlyStemAndEarthlyBranchFromOffset(dayCyclical + day - 1);
 };
 
 /**
@@ -92,14 +90,14 @@ export const heavenlyStemAndEarthlyBranchOfDay = (
  */
 export const heavenlyStemAndEarthlyBranchOfTime = (
   timeIndex: number,
-  heavenlyStemNameOfDay: HeavenlyStem,
+  heavenlyStemNameOfDay: HeavenlyStem
 ): HeavenlyStemAndEarthlyBranch => {
   const startHeavenlyStem = RAT_RULE[heavenlyStemNameOfDay];
   const heavenlyStem =
     HEAVENLY_STEMS[
       fixIndex(
         HEAVENLY_STEMS.indexOf(startHeavenlyStem) + fixIndex(timeIndex),
-        10,
+        10
       )
     ];
   const earthlyBranch = EARTHLY_BRANCHES[fixIndex(timeIndex)];
@@ -118,34 +116,14 @@ export const heavenlyStemAndEarthlyBranchOfTime = (
 export const getHeavenlyStemAndEarthlyBranchByLunarDate = (
   dateStr: string,
   timeIndex: number,
-  isLeap?: boolean,
+  isLeap?: boolean
 ): HeavenlyStemAndEarthlyBranchDate => {
-  const [lunarYear] = normalizeDateStr(dateStr);
-  const { solarYear, solarMonth, solarDay } = lunar2solar(dateStr, isLeap);
-  const solarDate = new Date(solarYear, solarMonth - 1, solarDay);
+  const solarDate = lunar2solar(dateStr, isLeap);
 
-  const yearly = heavenlyStemAndEarthlyBranchOfYear(lunarYear);
-  const monthly = heavenlyStemAndEarthlyBranchOfMonth(solarDate);
-  const daily = heavenlyStemAndEarthlyBranchOfDay(solarDate, timeIndex);
-  const hourly = heavenlyStemAndEarthlyBranchOfTime(timeIndex, daily[0]);
-
-  return {
-    yearly,
-    monthly,
-    daily,
-    hourly,
-    toString() {
-      if (yearly[0].length > 1) {
-        return `${yearly.join(" ")} - ${monthly.join(" ")} - ${daily.join(
-          " ",
-        )} - ${hourly.join(" ")}`;
-      } else {
-        return `${yearly.join("")} ${monthly.join("")} ${daily.join(
-          "",
-        )} ${hourly.join("")}`;
-      }
-    },
-  };
+  return getHeavenlyStemAndEarthlyBranchBySolarDate(
+    solarDate.toString(),
+    timeIndex
+  );
 };
 
 /**
@@ -157,13 +135,32 @@ export const getHeavenlyStemAndEarthlyBranchByLunarDate = (
  */
 export const getHeavenlyStemAndEarthlyBranchBySolarDate = (
   dateStr: string | Date,
-  timeIndex: number,
+  timeIndex: number
 ): HeavenlyStemAndEarthlyBranchDate => {
-  const lunarDate = solar2lunar(dateStr);
+  const [year, month, date] = normalizeDateStr(dateStr);
+  const solarDate = new Date(year, month - 1, date);
 
-  return getHeavenlyStemAndEarthlyBranchByLunarDate(
-    lunarDate.toString(),
-    timeIndex,
-    lunarDate.isLeap,
-  );
+  if (timeIndex == 12) {
+    // 晚子时，需要加1天
+    solarDate.setDate(solarDate.getDate() + 1);
+  }
+
+  const { lunarYear } = solar2lunar(solarDate);
+
+  const yearly = heavenlyStemAndEarthlyBranchOfYear(lunarYear);
+  const monthly = heavenlyStemAndEarthlyBranchOfMonth(solarDate);
+  const daily = heavenlyStemAndEarthlyBranchOfDay(solarDate);
+  const hourly = heavenlyStemAndEarthlyBranchOfTime(timeIndex, daily[0]);
+
+  return {
+    yearly,
+    monthly,
+    daily,
+    hourly,
+    toString() {
+      return `${yearly.join("")} ${monthly.join("")} ${daily.join(
+        ""
+      )} ${hourly.join("")}`;
+    },
+  };
 };
