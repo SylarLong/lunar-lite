@@ -94,18 +94,20 @@ describe("calendar/heavenlyStemAndEarthlyBranch", () => {
         result: "癸卯 甲寅 己酉 甲子",
       },
       {
-        date: '1987-12-6',
+        date: "1987-12-6",
         timeIndex: 11,
-        result: "丁卯 辛亥 己丑 乙亥"
-      }, {
-        date: '1987-12-6',
+        result: "丁卯 辛亥 己丑 乙亥",
+      },
+      {
+        date: "1987-12-6",
         timeIndex: 12,
-        result: "丁卯 壬子 庚寅 丙子"
-      }, {
-        date: '1983-4-22',
+        result: "丁卯 壬子 庚寅 丙子",
+      },
+      {
+        date: "1983-4-22",
         timeIndex: 0,
-        result: "癸亥 丙辰 庚辰 丙子"
-      }
+        result: "癸亥 丙辰 庚辰 丙子",
+      },
     ];
 
     data.forEach(({ date, timeIndex, result }) => {

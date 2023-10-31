@@ -1,4 +1,10 @@
-import { getSign, getTerm, getZodiac, lunarDayToStr, lunarMonthToStr } from "..";
+import {
+  getSign,
+  getTerm,
+  getZodiac,
+  lunarDayToStr,
+  lunarMonthToStr,
+} from "..";
 import { EarthlyBranch } from "../types";
 import { fixIndex } from "../utils";
 
@@ -14,7 +20,7 @@ describe("calendar/misc", () => {
       getTerm(2101, 0);
     } catch (err) {
       expect((err as Error).message).toBe(
-        "Year should be greater or equal then 1900."
+        "Year should be greater or equal then 1900.",
       );
     }
 
@@ -36,7 +42,7 @@ describe("calendar/misc", () => {
       lunarMonthToStr(0);
     } catch (err) {
       expect((err as Error).message).toBe(
-        "lunarMonth should be between 1 and 12."
+        "lunarMonth should be between 1 and 12.",
       );
     }
   });
@@ -123,23 +129,22 @@ describe("calendar/misc", () => {
 
   test("getZodiac()", () => {
     const data = [
-      {key: "子", value: "鼠"},
-      {key: "丑", value: "牛"},
-      {key: "寅", value: "虎"},
-      {key: "卯", value: "兔"},
-      {key: "辰", value: "龙"},
-      {key: "巳", value: "蛇"},
-      {key: "午", value: "马"},
-      {key: "未", value: "羊"},
-      {key: "申", value: "猴"},
-      {key: "酉", value: "鸡"},
-      {key: "戌", value: "狗"},
-      {key: "亥", value: "猪"},
+      { key: "子", value: "鼠" },
+      { key: "丑", value: "牛" },
+      { key: "寅", value: "虎" },
+      { key: "卯", value: "兔" },
+      { key: "辰", value: "龙" },
+      { key: "巳", value: "蛇" },
+      { key: "午", value: "马" },
+      { key: "未", value: "羊" },
+      { key: "申", value: "猴" },
+      { key: "酉", value: "鸡" },
+      { key: "戌", value: "狗" },
+      { key: "亥", value: "猪" },
     ];
 
     data.forEach((item) => {
       expect(getZodiac(item.key as EarthlyBranch)).toEqual(item.value);
     });
   });
-  
 });
