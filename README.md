@@ -8,7 +8,7 @@
 
 <div align="center">
 
-[![Maintainability](https://api.codeclimate.com/v1/badges/b57f0e6e2e8875ce39ae/maintainability)](https://codeclimate.com/github/SylarLong/lunar-lite/maintainability) 
+[![Maintainability](https://api.codeclimate.com/v1/badges/2d004ea6ae3b990b5a41/maintainability)](https://codeclimate.com/github/SylarLong/lunar-lite/maintainability)
 [![Codecov](https://github.com/SylarLong/iztro-hook/actions/workflows/Codecov.yml/badge.svg)](https://github.com/SylarLong/lunar-lite/actions/workflows/Codecov.yml)
 [![npm](https://img.shields.io/npm/v/lunar-lite?logo=npm&logoColor=%23CB3837)](https://www.npmjs.com/package/lunar-lite) 
 ![Codecov](https://img.shields.io/codecov/c/github/SylarLong/lunar-lite?logo=codecov&logoColor=%23F01F7A) 
