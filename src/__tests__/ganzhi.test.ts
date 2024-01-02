@@ -7,6 +7,18 @@ describe("calendar/heavenlyStemAndEarthlyBranch", () => {
   test("getHeavenlyStemAndEarthlyBranchByLunarDate()", () => {
     const data = [
       {
+        date: "111-6-13",
+        timeIndex: 1,
+        isLeap: false,
+        result: "辛亥 乙未 庚寅 丁丑",
+      },
+      {
+        date: "1111-6-13",
+        timeIndex: 1,
+        isLeap: false,
+        result: "辛卯 乙未 甲辰 乙丑",
+      },
+      {
         date: "2023-6-13",
         timeIndex: 1,
         isLeap: false,
