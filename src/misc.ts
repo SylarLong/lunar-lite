@@ -1,6 +1,6 @@
-import { Solar } from "lunar-typescript";
+import { LunarMonth, Solar } from "lunar-typescript";
 import { EARTHLY_BRANCHES, ZODIAC } from "./constants";
-import { normalizeDateStr } from "./convertor";
+import { normalizeDateStr, solar2lunar } from "./convertor";
 import { EarthlyBranch } from "./types";
 
 /**
@@ -25,3 +25,16 @@ export const getSign = (solarDateStr: string) => {
 export const getZodiac = (earthlyBranchOfYear: EarthlyBranch) => {
   return ZODIAC[EARTHLY_BRANCHES.indexOf(earthlyBranchOfYear)];
 };
+
+/**
+ * 按照传入阳历日期获取该月农历月份天数
+ * 
+ * @param solarDateStr 阳历日期
+ * @returns {number} 日期天数
+ */
+export const getTotalDaysOfLunarMonth = (solarDateStr: string) => {
+  const {lunarYear, lunarMonth, isLeap} = solar2lunar(solarDateStr);
+  const month = LunarMonth.fromYm(lunarYear, isLeap ? 0 - lunarMonth : lunarMonth);
+
+  return month?.getDayCount() ?? 0;
+}

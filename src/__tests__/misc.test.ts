@@ -1,4 +1,4 @@
-import { getSign, getZodiac } from "..";
+import { getSign, getTotalDaysOfLunarMonth, getZodiac } from "..";
 import { EarthlyBranch } from "../types";
 import { fixIndex } from "../utils";
 
@@ -87,5 +87,11 @@ describe("calendar/misc", () => {
     data.forEach((item) => {
       expect(getZodiac(item.key as EarthlyBranch)).toEqual(item.value);
     });
+  });
+
+  test("getTotalDaysOfLunarMonth()", () => {
+    expect(getTotalDaysOfLunarMonth('2023-10-10')).toEqual(30);
+    expect(getTotalDaysOfLunarMonth('2023-3-1')).toEqual(30);
+    expect(getTotalDaysOfLunarMonth('2023-4-2')).toEqual(29);
   });
 });
