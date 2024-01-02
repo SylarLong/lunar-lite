@@ -64,7 +64,7 @@ export type LunarDate = {
    * isLeap = true;
    *
    * toString(); // 2023-6-12
-   * toString(true); // 二〇二三年(闰)二月十一
+   * toString(true); // 二〇二三年闰二月十一
    */
   toString: (toCnStr?: boolean) => string;
 };

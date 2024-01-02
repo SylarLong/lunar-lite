@@ -1,6 +1,6 @@
 {
   "name": "lunar-lite",
-  "version": "0.0.3",
+  "version": "0.1.0",
   "description": "精简版的农历和阳历日期转换库。",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
@@ -51,5 +51,7 @@
     "ts-jest": "^29.1.1",
     "typescript": "^5.2.2"
   },
-  "dependencies": {}
+  "dependencies": {
+    "lunar-typescript": "^1.6.13"
+  }
 }

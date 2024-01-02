@@ -1,109 +1,11 @@
-import { fixIndex } from "./utils";
-import { lunar2solar, normalizeDateStr, solar2lunar } from "./convertor";
-import { getTerm } from "./misc";
-import { EARTHLY_BRANCHES, HEAVENLY_STEMS, RAT_RULE } from "./constants";
+import { lunar2solar, normalizeDateStr } from "./convertor";
 import {
+  EarthlyBranch,
   HeavenlyStem,
   HeavenlyStemAndEarthlyBranch,
   HeavenlyStemAndEarthlyBranchDate,
 } from "./types";
-
-/**
- * 传入offset偏移量返回干支
- *
- * @param offset 相对甲子的偏移量，单位为天
- * @return [干, 支]
- */
-const heavenlyStemAndEarthlyBranchFromOffset = (
-  offset: number,
-): HeavenlyStemAndEarthlyBranch => {
-  return [HEAVENLY_STEMS[offset % 10], EARTHLY_BRANCHES[offset % 12]];
-};
-
-/**
- * 农历年份计算年干支
- *
- * @param  year 农历年的年份数
- * @return [干, 支]
- */
-export const heavenlyStemAndEarthlyBranchOfYear = (
-  year: number,
-): HeavenlyStemAndEarthlyBranch => {
-  let heavenStemKey = (year - 3) % 10;
-  let earthlyBranchKey = (year - 3) % 12;
-
-  if (heavenStemKey === 0) heavenStemKey = 10; // 如果余数为0则为最后一个天干
-  if (earthlyBranchKey === 0) earthlyBranchKey = 12; // 如果余数为0则为最后一个地支
-
-  return [
-    HEAVENLY_STEMS[heavenStemKey - 1],
-    EARTHLY_BRANCHES[earthlyBranchKey - 1],
-  ];
-};
-
-/**
- * 通过公历日期计算月干支
- *
- * @param date 公历日期
- * @returns [干, 支]
- */
-export const heavenlyStemAndEarthlyBranchOfMonth = (
-  date: Date,
-): HeavenlyStemAndEarthlyBranch => {
-  const [year, month, day] = normalizeDateStr(date);
-
-  // 当月的第一个节气
-  // 返回当月「节」为几日开始
-  const firstNode = getTerm(year, month * 2 - 1);
-  const offset = (year - 1900) * 12 + month + 11;
-
-  if (day >= firstNode) {
-    return heavenlyStemAndEarthlyBranchFromOffset(offset + 1);
-  }
-
-  return heavenlyStemAndEarthlyBranchFromOffset(offset);
-};
-
-/**
- * 获取公历日期计算日干支
- *
- * @param date 公历日期
- * @param timeIndex 时辰索引，主要是为了修复晚子时需要加一天的问题
- * @returns [干, 支]
- */
-export const heavenlyStemAndEarthlyBranchOfDay = (
-  date: Date,
-): HeavenlyStemAndEarthlyBranch => {
-  const [year, month, day] = normalizeDateStr(date);
-  const dayCyclical =
-    Date.UTC(year, month - 1, 1, 0, 0, 0, 0) / 86400000 + 25567 + 10;
-
-  return heavenlyStemAndEarthlyBranchFromOffset(dayCyclical + day - 1);
-};
-
-/**
- * 通过当天的日天干获取第 `t` （0~11）个时辰的干支，需要通过五鼠遁来定时辰天干
- *
- * @param timeIndex 时辰序号（0~11），子时为0，亥时为11
- * @param heavenlyStemNameOfDay 当日天干
- * @returns [干, 支]
- */
-export const heavenlyStemAndEarthlyBranchOfTime = (
-  timeIndex: number,
-  heavenlyStemNameOfDay: HeavenlyStem,
-): HeavenlyStemAndEarthlyBranch => {
-  const startHeavenlyStem = RAT_RULE[heavenlyStemNameOfDay];
-  const heavenlyStem =
-    HEAVENLY_STEMS[
-      fixIndex(
-        HEAVENLY_STEMS.indexOf(startHeavenlyStem) + fixIndex(timeIndex),
-        10,
-      )
-    ];
-  const earthlyBranch = EARTHLY_BRANCHES[fixIndex(timeIndex)];
-
-  return [heavenlyStem, earthlyBranch];
-};
+import { Solar } from "lunar-typescript";
 
 /**
  * 通过农历获取生辰干支
@@ -138,19 +40,31 @@ export const getHeavenlyStemAndEarthlyBranchBySolarDate = (
   timeIndex: number,
 ): HeavenlyStemAndEarthlyBranchDate => {
   const [year, month, date] = normalizeDateStr(dateStr);
-  const solarDate = new Date(year, month - 1, date);
-
-  if (timeIndex == 12) {
-    // 晚子时，需要加1天
-    solarDate.setDate(solarDate.getDate() + 1);
-  }
-
-  const { lunarYear } = solar2lunar(solarDate);
-
-  const yearly = heavenlyStemAndEarthlyBranchOfYear(lunarYear);
-  const monthly = heavenlyStemAndEarthlyBranchOfMonth(solarDate);
-  const daily = heavenlyStemAndEarthlyBranchOfDay(solarDate);
-  const hourly = heavenlyStemAndEarthlyBranchOfTime(timeIndex, daily[0]);
+  const solar = Solar.fromYmdHms(
+    year,
+    month,
+    date,
+    Math.max(timeIndex * 2 - 1, 0),
+    30,
+    0,
+  );
+  const lunar = solar.getLunar();
+  const yearly: HeavenlyStemAndEarthlyBranch = [
+    lunar.getYearGanByLiChun() as HeavenlyStem,
+    lunar.getYearZhiByLiChun() as EarthlyBranch,
+  ];
+  const monthly: HeavenlyStemAndEarthlyBranch = [
+    lunar.getMonthGanExact() as HeavenlyStem,
+    lunar.getMonthZhiExact() as EarthlyBranch,
+  ];
+  const daily: HeavenlyStemAndEarthlyBranch = [
+    lunar.getDayGanExact() as HeavenlyStem,
+    lunar.getDayZhiExact() as EarthlyBranch,
+  ];
+  const hourly: HeavenlyStemAndEarthlyBranch = [
+    lunar.getTimeGan() as HeavenlyStem,
+    lunar.getTimeZhi() as EarthlyBranch,
+  ];
 
   return {
     yearly,

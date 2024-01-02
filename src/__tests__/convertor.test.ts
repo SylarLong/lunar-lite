@@ -9,7 +9,7 @@ describe("calendar/convertor", () => {
         isLeap: false,
       },
       "2023-4-1": {
-        date: "二〇二三年(闰)二月十一",
+        date: "二〇二三年闰二月十一",
         date2: "2023-2-11",
         isLeap: true,
       },
@@ -76,7 +76,7 @@ describe("calendar/convertor", () => {
     try {
       solar2lunar("2023-22-22");
     } catch (err) {
-      expect((err as Error).message).toBe("invalid date.");
+      expect((err as Error).message).toBe("wrong month 22");
     }
 
     try {
