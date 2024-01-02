@@ -12,7 +12,7 @@ import { EarthlyBranch } from "./types";
 export const getSign = (solarDateStr: string) => {
   const [year, month, day] = normalizeDateStr(solarDateStr);
 
-  return Solar.fromYmd(year, month, day).getXingZuo() + '座';
+  return Solar.fromYmd(year, month, day).getXingZuo() + "座";
 };
 
 /**
@@ -28,13 +28,16 @@ export const getZodiac = (earthlyBranchOfYear: EarthlyBranch) => {
 
 /**
  * 按照传入阳历日期获取该月农历月份天数
- * 
+ *
  * @param solarDateStr 阳历日期
  * @returns {number} 日期天数
  */
 export const getTotalDaysOfLunarMonth = (solarDateStr: string) => {
-  const {lunarYear, lunarMonth, isLeap} = solar2lunar(solarDateStr);
-  const month = LunarMonth.fromYm(lunarYear, isLeap ? 0 - lunarMonth : lunarMonth);
+  const { lunarYear, lunarMonth, isLeap } = solar2lunar(solarDateStr);
+  const month = LunarMonth.fromYm(
+    lunarYear,
+    isLeap ? 0 - lunarMonth : lunarMonth,
+  );
 
   return month?.getDayCount() ?? 0;
-}
+};

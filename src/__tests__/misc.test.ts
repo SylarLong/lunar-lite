@@ -90,8 +90,8 @@ describe("calendar/misc", () => {
   });
 
   test("getTotalDaysOfLunarMonth()", () => {
-    expect(getTotalDaysOfLunarMonth('2023-10-10')).toEqual(30);
-    expect(getTotalDaysOfLunarMonth('2023-3-1')).toEqual(30);
-    expect(getTotalDaysOfLunarMonth('2023-4-2')).toEqual(29);
+    expect(getTotalDaysOfLunarMonth("2023-10-10")).toEqual(30);
+    expect(getTotalDaysOfLunarMonth("2023-3-1")).toEqual(30);
+    expect(getTotalDaysOfLunarMonth("2023-4-2")).toEqual(29);
   });
 });
