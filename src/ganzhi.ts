@@ -4,6 +4,7 @@ import {
   HeavenlyStem,
   HeavenlyStemAndEarthlyBranch,
   HeavenlyStemAndEarthlyBranchDate,
+  Options,
 } from "./types";
 import { Solar } from "lunar-typescript";
 
@@ -19,12 +20,14 @@ export const getHeavenlyStemAndEarthlyBranchByLunarDate = (
   dateStr: string,
   timeIndex: number,
   isLeap?: boolean,
+  options: Options = { year: 'normal' }
 ): HeavenlyStemAndEarthlyBranchDate => {
   const solarDate = lunar2solar(dateStr, isLeap);
 
   return getHeavenlyStemAndEarthlyBranchBySolarDate(
     solarDate.toString(),
     timeIndex,
+    options
   );
 };
 
@@ -38,6 +41,7 @@ export const getHeavenlyStemAndEarthlyBranchByLunarDate = (
 export const getHeavenlyStemAndEarthlyBranchBySolarDate = (
   dateStr: string | Date,
   timeIndex: number,
+  options: Options = { year: 'exact' }
 ): HeavenlyStemAndEarthlyBranchDate => {
   const [year, month, date] = normalizeDateStr(dateStr);
   const solar = Solar.fromYmdHms(
@@ -49,9 +53,13 @@ export const getHeavenlyStemAndEarthlyBranchBySolarDate = (
     0,
   );
   const lunar = solar.getLunar();
+
+  const yearlyGan = options?.year === 'normal' ? lunar.getYearGan() : lunar.getYearGanByLiChun();
+  const yearlyZhi = options?.year === 'normal' ? lunar.getYearZhi() : lunar.getYearZhiByLiChun();
+
   const yearly: HeavenlyStemAndEarthlyBranch = [
-    lunar.getYearGanByLiChun() as HeavenlyStem,
-    lunar.getYearZhiByLiChun() as EarthlyBranch,
+    yearlyGan as HeavenlyStem,
+    yearlyZhi as EarthlyBranch,
   ];
   const monthly: HeavenlyStemAndEarthlyBranch = [
     lunar.getMonthGanExact() as HeavenlyStem,

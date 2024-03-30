@@ -47,6 +47,7 @@ describe("calendar/heavenlyStemAndEarthlyBranch", () => {
         timeIndex: 1,
         isLeap: false,
         result: "壬寅 癸丑 庚辰 丁丑",
+        result2: "癸卯 癸丑 庚辰 丁丑",
       },
       {
         date: "2022-12-30",
@@ -62,14 +63,27 @@ describe("calendar/heavenlyStemAndEarthlyBranch", () => {
       },
     ];
 
-    data.forEach(({ date, timeIndex, isLeap, result }) => {
+    data.forEach(({ date, timeIndex, isLeap, result, result2 }) => {
       expect(
         getHeavenlyStemAndEarthlyBranchByLunarDate(
           date,
           timeIndex,
           isLeap,
+          {
+            year: 'exact'
+          }
         ).toString(),
       ).toBe(result);
+      expect(
+        getHeavenlyStemAndEarthlyBranchByLunarDate(
+          date,
+          timeIndex,
+          isLeap,
+          {
+            year: 'normal'
+          }
+        ).toString(),
+      ).toBe(result2 ?? result);
     });
   });
 
