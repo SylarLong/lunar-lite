@@ -63,6 +63,11 @@ describe("calendar/convertor", () => {
         date2: "1996-6-1",
         isLeap: false,
       },
+      "1995-03-30": {
+        date: "一九九五年二月三十",
+        date2: "1995-2-30",
+        isLeap: false,
+      },
     };
 
     Object.entries(dates).map(([key, value]) => {
@@ -115,6 +120,7 @@ describe("calendar/convertor", () => {
       "2020-1-24": { date: "2019-12-30", isLeap: false },
       "2020-1-25": { date: "2020-1-1", isLeap: false },
       "2023-7-30": { date: "2023-6-13", isLeap: false },
+      "1995-3-30": { date: "1995-2-30", isLeap: false },
     };
 
     Object.entries(dates).map(([key, value]) => {

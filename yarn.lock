@@ -2651,10 +2651,10 @@ lru-cache@^6.0.0:
   dependencies:
     yallist "^4.0.0"
 
-lunar-typescript@^1.7.3:
-  version "1.7.3"
-  resolved "https://registry.npmjs.org/lunar-typescript/-/lunar-typescript-1.7.3.tgz#841d997687a0145a1fe9f65db735675f66d06660"
-  integrity sha512-VXMdgh2Psrn3vtfrai4lPug3Mt7ijYGVTICDARA8tLzqGv3Io/OvS23wxzFi/AbSzxt93u2wWhgv3VGKPSbUgQ==
+lunar-typescript@^1.7.5:
+  version "1.7.5"
+  resolved "https://registry.npmjs.org/lunar-typescript/-/lunar-typescript-1.7.5.tgz#8a407f9db10aaf896f1477564dbfef741463e245"
+  integrity sha512-AlOwYrxHRCR9Plba5TlZY0NVv6aFobmR1gxfiAE1KxjDzBXoDtT2KrsBYCVaErGokiL8qLMS1FNwGPiPRX2a4g==
 
 make-dir@^4.0.0:
   version "4.0.0"
