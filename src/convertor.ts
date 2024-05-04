@@ -76,7 +76,7 @@ export const lunar2solar = (
   const lunarYear = LunarYear.fromYear(lunar.getYear());
   const leapMonth = lunarYear.getLeapMonth();
 
-  if (leapMonth > 0 && isLeapMonth) {
+  if (leapMonth > 0 && leapMonth === month && isLeapMonth) {
     lunar = Lunar.fromYmd(year, 0 - month, day);
   }
 
