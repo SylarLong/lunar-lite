@@ -65,24 +65,14 @@ describe("calendar/heavenlyStemAndEarthlyBranch", () => {
 
     data.forEach(({ date, timeIndex, isLeap, result, result2 }) => {
       expect(
-        getHeavenlyStemAndEarthlyBranchByLunarDate(
-          date,
-          timeIndex,
-          isLeap,
-          {
-            year: 'exact'
-          }
-        ).toString(),
+        getHeavenlyStemAndEarthlyBranchByLunarDate(date, timeIndex, isLeap, {
+          year: "exact",
+        }).toString(),
       ).toBe(result);
       expect(
-        getHeavenlyStemAndEarthlyBranchByLunarDate(
-          date,
-          timeIndex,
-          isLeap,
-          {
-            year: 'normal'
-          }
-        ).toString(),
+        getHeavenlyStemAndEarthlyBranchByLunarDate(date, timeIndex, isLeap, {
+          year: "normal",
+        }).toString(),
       ).toBe(result2 ?? result);
     });
   });

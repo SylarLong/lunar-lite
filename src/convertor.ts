@@ -26,7 +26,7 @@ export const normalizeDateStr = (date: string | Date) => {
     .split(/[ ]+/)
     .map((item) => item.split(/[-:/.]/))
     .reduce((prev, next) => prev.concat(next), [])
-    .map((item) => +item);
+    .map((item) => Math.abs(+item));
 };
 
 /**

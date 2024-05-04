@@ -99,5 +99,5 @@ export type HeavenlyStemAndEarthlyBranchDate = {
 
 export type Options = {
   /** exact：立春分界，normal：除夕分界 */
-  year: 'exact' | 'normal',
-}
+  year: "exact" | "normal";
+};
