@@ -130,13 +130,19 @@ describe("calendar/heavenlyStemAndEarthlyBranch", () => {
       }, {
         date: "1979-8-8",
         timeIndex: 0,
+        result: "己未 辛未 丁未 庚子",
+        options: { year: 'exact' as  'exact' | 'normal' },
+      }, {
+        date: "1979-8-8",
+        timeIndex: 0,
         result: "己未 壬申 丁未 庚子",
+        options: { year: 'normal' as  'exact' | 'normal' },
       }
     ];
 
-    data.forEach(({ date, timeIndex, result }) => {
+    data.forEach(({ date, timeIndex, result, options }) => {
       expect(
-        getHeavenlyStemAndEarthlyBranchBySolarDate(date, timeIndex).toString(),
+        getHeavenlyStemAndEarthlyBranchBySolarDate(date, timeIndex, options).toString(),
       ).toBe(result);
     });
   });
