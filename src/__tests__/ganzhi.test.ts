@@ -123,7 +123,15 @@ describe("calendar/heavenlyStemAndEarthlyBranch", () => {
         date: "1983-4-22",
         timeIndex: 0,
         result: "癸亥 丙辰 庚辰 丙子",
-      },
+      }, {
+        date: "1979-8-7",
+        timeIndex: 0,
+        result: "己未 辛未 丙午 戊子",
+      }, {
+        date: "1979-8-8",
+        timeIndex: 0,
+        result: "己未 壬申 丁未 庚子",
+      }
     ];
 
     data.forEach(({ date, timeIndex, result }) => {

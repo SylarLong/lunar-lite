@@ -68,8 +68,8 @@ export const getHeavenlyStemAndEarthlyBranchBySolarDate = (
     yearlyZhi as EarthlyBranch,
   ];
   const monthly: HeavenlyStemAndEarthlyBranch = [
-    lunar.getMonthGanExact() as HeavenlyStem,
-    lunar.getMonthZhiExact() as EarthlyBranch,
+    lunar.getMonthGan() as HeavenlyStem,
+    lunar.getMonthZhi() as EarthlyBranch,
   ];
   const daily: HeavenlyStemAndEarthlyBranch = [
     lunar.getDayGanExact() as HeavenlyStem,
