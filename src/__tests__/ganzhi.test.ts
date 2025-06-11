@@ -131,12 +131,12 @@ describe("calendar/heavenlyStemAndEarthlyBranch", () => {
         date: "1979-8-8",
         timeIndex: 0,
         result: "己未 辛未 丁未 庚子",
-        options: { year: 'exact' as  'exact' | 'normal' },
+        options: { month: 'exact' as  'exact' | 'normal' },
       }, {
         date: "1979-8-8",
         timeIndex: 0,
         result: "己未 壬申 丁未 庚子",
-        options: { year: 'normal' as  'exact' | 'normal' },
+        options: { month: 'normal' as  'exact' | 'normal' },
       }
     ];
 

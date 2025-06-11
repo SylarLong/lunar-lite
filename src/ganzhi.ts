@@ -20,7 +20,7 @@ export const getHeavenlyStemAndEarthlyBranchByLunarDate = (
   dateStr: string,
   timeIndex: number,
   isLeap?: boolean,
-  options: Options = { year: "normal" }
+  options: Options = { year: "normal", month: "exact" }
 ): HeavenlyStemAndEarthlyBranchDate => {
   const solarDate = lunar2solar(dateStr, isLeap);
 
@@ -68,10 +68,10 @@ export const getHeavenlyStemAndEarthlyBranchBySolarDate = (
     yearlyZhi as EarthlyBranch,
   ];
   const monthly: HeavenlyStemAndEarthlyBranch = [
-    (options?.year === "normal"
+    (options?.month === "normal"
       ? lunar.getMonthGan()
       : lunar.getMonthGanExact()) as HeavenlyStem,
-    (options?.year === "normal"
+    (options?.month === "normal"
       ? lunar.getMonthZhi()
       : lunar.getMonthZhiExact()) as EarthlyBranch,
   ];
