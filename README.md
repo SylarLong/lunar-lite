@@ -134,3 +134,11 @@ const solarDate = lunar2solar('1990-10-10', true);
 // 公历转农历
 const lunarDate = solar2lunar('2023-10-23');
 ```
+
+## 发布
+
+首次发布前，在 [npm 包设置](https://www.npmjs.com/package/lunar-lite/access)中添加 GitHub Actions Trusted Publisher，填写用户 `SylarLong`、仓库 `lunar-lite`、工作流文件 `Release.yaml`，启用 `npm publish`，环境名留空。
+
+工作流合入 `main` 后，从包含该工作流的提交推送与 `package.json` 版本一致的 `v<版本号>` 标签。GitHub Actions 会构建、测试并检查代码，随后发布到 npm 并创建带有自动生成说明的 GitHub Release。正式版使用 npm 的 `latest` 标签，预发布版使用 `next`。
+
+发布失败时，可以重跑原任务，也可以在 Actions 的 Release 工作流里手动填写包含该工作流的已有标签。npm 上已有的版本会跳过上传，继续创建 GitHub Release。
