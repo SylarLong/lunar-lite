@@ -140,6 +140,11 @@ describe("calendar/convertor", () => {
     }
   });
 
+  test("lunar2solar() validates the selected leap month", () => {
+    expect(lunar2solar("2017-6-30", true).toString()).toBe("2017-8-21");
+    expect(() => lunar2solar("2017-6-30")).toThrow();
+  });
+
   test("normalizeDateStr()", () => {
     const data = {
       "2023-12-1": [2023, 12, 1],
