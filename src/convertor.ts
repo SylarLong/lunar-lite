@@ -72,15 +72,9 @@ export const lunar2solar = (
   isLeapMonth?: boolean,
 ): SolarDate => {
   const [year, month, day] = normalizeDateStr(dateStr);
-  let lunar = Lunar.fromYmd(year, month, day);
-  const lunarYear = LunarYear.fromYear(lunar.getYear());
-  const leapMonth = lunarYear.getLeapMonth();
-
-  if (leapMonth > 0 && leapMonth === month && isLeapMonth) {
-    lunar = Lunar.fromYmd(year, 0 - month, day);
-  }
-
-  const solar = lunar.getSolar();
+  const leapMonth = isLeapMonth ? LunarYear.fromYear(year).getLeapMonth() : 0;
+  const selectedMonth = leapMonth > 0 && leapMonth === month ? -month : month;
+  const solar = Lunar.fromYmd(year, selectedMonth, day).getSolar();
 
   const solarYear = solar.getYear();
   const solarMonth = solar.getMonth();
